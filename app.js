@@ -89,8 +89,8 @@
             phase: phase,
             speed: speed,
             amp: 0.3 + Math.random() * 0.8,
-            // Tezroq yig'ilish uchun lerpSpeed ni oshiramiz
-            lerpSpeed: 0.015 + Math.random() * 0.035
+            // Juda tez yig'ilish uchun lerpSpeed ni ancha oshiramiz
+            lerpSpeed: 0.035 + Math.random() * 0.065
         });
     }
 
@@ -114,9 +114,9 @@
             const dy = p.targetY - p.y;
             const dist = Math.sqrt(dx*dx + dy*dy);
             
-            if (dist > 0.3) {
-                // Tezroq yig'ilish uchun speed ni oshiramiz
-                const speed = p.lerpSpeed * (1 + assemblyProgress * 3);
+            if (dist > 0.2) {
+                // Juda tez yig'ilish uchun speed ni ancha oshiramiz
+                const speed = p.lerpSpeed * (1 + assemblyProgress * 5);
                 p.x += dx * speed;
                 p.y += dy * speed;
                 allSettled = false;
@@ -151,12 +151,11 @@
         }
 
         // SH+S harflarini yurakning o'rtasiga chizish
-        if (assemblyProgress > 0.3) {
-            const alpha = Math.min(1, (assemblyProgress - 0.3) / 0.4);
+        if (assemblyProgress > 0.2) {
+            const alpha = Math.min(1, (assemblyProgress - 0.2) / 0.3);
             ctx.save();
             ctx.globalAlpha = alpha;
             
-            // SH+S matnini yurak o'rtasiga joylashtirish
             const centerX = W / 2;
             const centerY = H / 2 + 5;
             
@@ -173,25 +172,21 @@
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             
-            // Tashqi kontur (glow effekti)
             ctx.shadowColor = '#ff4d6d';
             ctx.shadowBlur = 40;
             ctx.font = 'bold 52px Arial, sans-serif';
             ctx.fillStyle = '#ffffff';
             ctx.fillText('SH+S', centerX, centerY);
             
-            // Ichki matn (yorqinroq)
             ctx.shadowBlur = 20;
             ctx.fillStyle = '#ffd6e0';
             ctx.fillText('SH+S', centerX, centerY);
             
-            // Yuqori qatlam (yaltiroq)
             ctx.shadowBlur = 0;
             ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
             ctx.font = 'bold 50px Arial, sans-serif';
             ctx.fillText('SH+S', centerX, centerY - 1);
             
-            // Qizil rangli kontur
             ctx.strokeStyle = '#ff4d6d';
             ctx.lineWidth = 2;
             ctx.font = 'bold 52px Arial, sans-serif';
@@ -200,12 +195,12 @@
             ctx.restore();
         }
 
-        // Yig'ilish progressini tezroq oshirish
+        // Yig'ilish progressini juda tez oshirish
         if (!isAssembled) {
-            assemblyProgress = Math.min(1, assemblyProgress + 0.008);
+            assemblyProgress = Math.min(1, assemblyProgress + 0.025);
             if (assemblyProgress >= 1) {
                 isAssembled = true;
-                setTimeout(showText, 400);
+                setTimeout(showText, 200);
             }
         }
 
